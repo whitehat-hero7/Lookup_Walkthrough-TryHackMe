@@ -346,7 +346,7 @@ As a result of inspecting the `/etc/passwd` file, we can confirm the presence of
 
 Navigating to the account’s home directory at `/home/think`, we discover a file named `.passwords`. However, we are unable to read its contents because we are currently operating as the low-privileged web server user *`www-data`*. The file’s permissions are set to `100640 (rw-r-----)`, which means only the `file owner` has `read and write` access, and the `group` has `read` access. Since *`www-data`* is neither the file `owner` nor a member of the associated `group`, we lack the necessary permissions to access this file. 
 
-### ✅ Step 7: Privilege Escalation
+### 🔶 Privilege Escalation
 
 Now that we’ve gathered sufficient information, the next logical step in our `privilege escalation` process is to identify `SUID (Set User ID)` binaries present on the system. The `SUID` bit is a special file permission in `Unix`-like operating systems that allows users to execute a file with the privileges of the file’s `owner`, rather than their own. This is particularly significant when the file owner is *`root`*.
 
@@ -454,11 +454,86 @@ Now that we’ve found the `password` for the user *`think`*, we can perform an 
 
 And we’ve successfully authenticated as the user *`think`*! Let’s explore the current working directory to see what we have access to. 
 
+**🔹 List Directory Contents:** *`ls`*
 
+![image](https://github.com/user-attachments/assets/ea0e00db-f4de-425e-b9bd-1a9a90f25372)
 
+Upon listing the contents, we notice a file named `user.txt`. This file likely contains the `user flag` or valuable information—let’s go ahead and read its contents
 
+**🔹 Read File Contents:** *`cat user.txt`*
 
+![image](https://github.com/user-attachments/assets/b95de57c-f9ab-485c-a08d-11033418f409)
 
+Congratulations!!! We have our `User FLAG`!!! On to the next!!!
+
+Lastly, we’ll need to escalate our privileges to the *`root`* user. To accomplish this, let’s check which commands can be executed with `sudo` privileges while being the user *`think`*—either without a `password` or after successful authentication.
+
+**🔹 List Sudo Commands:** *`sudo -l`*
+
+![image](https://github.com/user-attachments/assets/a6d88b2a-7cc9-432a-b83f-6aaac245efe8)
+
+The output indicates that we have permission to run the `/usr/bin/look` command (binary) as any user, including *`root`*, using `sudo`. The `look` command searches a dictionary file (default is `/usr/share/dict/words`) for words that start with a given string. If `look` can be run with `sudo`, it may be exploitable, especially if it allows you to invoke other commands or escape into a `shell`.
+
+To better understand how to exploit this, we can refer to `GTFOBins`, a valuable resource for identifying privilege escalation techniques using common binaries. Upon researching the <a href="https://gtfobins.github.io/gtfobins/look/">`Look`</a> binary , we discover that it can be used to read data from files, perform privileged reads, and even disclose files outside restricted file systems.
+
+![image](https://github.com/user-attachments/assets/4f24b4b5-d05a-47e1-a7b2-e000590b3414)
+
+Given this information, we can potentially leverage the `/usr/bin/look` binary to access sensitive files such as `/etc/shadow` and `/root/.ssh/id_rsa`, which contains the private key for the *`root`* user.
+
+**🔹 Access *`Root’s`* Private SSH Key:** *`sudo /user/bin/look ‘‘ /root/.ssh/id_rsa`*
+
+| **Part** | **Explanation** |
+|-|-|
+| sudo | Runs the command with elevated `root` privileges |
+| /usr/bin/look | This is the *`look`* command. It searches for lines in a file that begin with a specified string. |
+| ‘‘ (a space character) | This is the search string being passed to *`look`*. The single quotes mean a single space, but the characters have no space in between them during the command. 
+| /root/.ssh/id_rsa | This is the file being searched. In this case, the private `SSH` key for the *`root`* user |
+
+This command tries to read lines in   /root/.ssh/id_rsa   that begin with a space, using the *`look`* command — and it does this with `sudo`, which means it can bypass regular file permissions. Using an empty string `''` as the search term with the *`look`* command is a clever trick to bypass the intended usage and force the command to display the entire contents of a file, one line at a time. This method allows the user to leverage permitted `sudo` access to read a file indirectly. Here’s why: The *`look`* command searches for lines that start with the provided string. If the string is empty, then every line starts with an empty string, so it matches all lines.
+
+![image](https://github.com/user-attachments/assets/f8ef0f39-5d6f-42d3-99fe-a077872409b2)
+
+Copy, paste, and save the entire `SSH Private Key` to a `[filename.txt]` in your `Kali Linux VM` and set the appropriate permissions. 
+
+**Note:** Copy from the first line `BEGIN OPENSSH PRIVATE KEY` to the last line `END OPENSSH PRIVATE KEY`.
+
+**🔹 Set File Permissions:** *`chmod 600 [filename.txt]`*
+
+**6 (rw-) for the owner:** The owner can read/write the file.
+
+**0 (---) for the group:** no permissions for the group.
+
+**0 (---) for others:** no permissions for others.
+
+![image](https://github.com/user-attachments/assets/998d8519-f5ac-4594-8979-a88a74a17c94)
+
+Now let’s initiate a `SSH` session into the *`root`* user using the file containing its private `SSH key`.
+
+**🔹 Initiate SSH Session to Root:** *`ssh -i [filename.txt] root@lookup.thm`*
+
+**Note:** You can use the `Target IP Address` instead of `lookup.thm`.
+
+![image](https://github.com/user-attachments/assets/bd6269bb-8ec4-4e16-8dfa-eef11c34b114)
+
+We are `ROOT`!!! 
+
+Let’s explore the current working directory to see what we have access to. 
+
+**🔹 List Directory Contents:** *`ls`*
+
+**🔹 Read File Contents:** *`cat root.txt`*
+
+After listing the directory contents, we discover a file named `root.txt`. Reading its contents reveals the final piece of our challenge!!!
+
+Congratulation!!! The `root flag` has been captured!!! 🎉
+
+![image](https://github.com/user-attachments/assets/18f1dc74-1a39-4c9a-88b1-9bc396c6ba5e)
+
+## 🔶 Conclusion
+
+`Lookup` is more than just a challenge — it’s a hands-on journey that sharpens your skills as an ethical hacker. From the very beginning, you’re pushed to master the fundamentals of `enumeration`, `reconnaissance`, and `vulnerability analysis`. By identifying hidden subdomains and services, exploiting web application flaws, and escalating privileges through misconfigurations, you experience the full cycle of a real-world penetration test.
+
+This lab doesn’t just teach you how to exploit — it trains you to `think critically`, `automate smartly`, and `act strategically`. The lessons learned here reinforce core concepts in `web exploitation`, `system enumeration`, and `privilege escalation`, preparing you for advanced challenges ahead. `Lookup` is a must for anyone serious about building a solid foundation in offensive security.
 
 
 
