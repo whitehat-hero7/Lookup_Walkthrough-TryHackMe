@@ -1,6 +1,6 @@
 ###### ⚠️ `Disclaimer`: This walkthrough is intended solely for educational purposes to enhance the learner's understanding of cybersecurity concepts, tools, and methodologies. It is carefully written to include hands-on practice scripting/programming and using the terminal/shell to write complex commands and avoid revealing flags, specific answers, credentials, or any information that could spoil the learning experience. All credit for the lab content and challenge design goes to TryHackMe as the original source. Learners are encouraged to complete the lab independently before referring to this guide for support.
 
-# Lookup Walkthrough-TryHackMe
+# Lookup (WALKTHROUGH)-TryHackMe
 
 <img src="https://github.com/user-attachments/assets/e75c95dc-e1a7-4a81-8ef4-6afda360ae96" height="150" width="300" >
 
