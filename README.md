@@ -2,7 +2,7 @@
 
 # Lookup (WALKTHROUGH)-TryHackMe
 
-<img src="https://github.com/user-attachments/assets/e75c95dc-e1a7-4a81-8ef4-6afda360ae96" height="150" width="300" >
+<img width="1200" height="293" alt="image" src="https://github.com/user-attachments/assets/f21c2a66-aaf7-4617-9a61-bf87d78bda57" />
 
 ## 🔶 Introduction
 
