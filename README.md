@@ -6,7 +6,7 @@
 
 ## 🔶 Introduction
 
-`Lookup` offers you a treasure trove of learning opportunities as an aspiring ethical hacker. This engaging `TryHackMe` lab challenges you with real-world vulnerabilities — from web application flaws to privilege escalation techniques — giving you hands-on experience that sharpens your hacking skills.
+`Lookup` offers you a treasure trove of learning opportunities as an aspiring ethical hacker. This engaging `TryHackMe` lab challenges you with real-world vulnerabilities, from web application flaws to privilege escalation techniques, giving you hands-on experience that sharpens your hacking skills.
 
 As you explore `Lookup`, you'll dive deep into reconnaissance, scanning, and enumeration, uncovering hidden services and subdomains. You'll learn to exploit web vulnerabilities like command injection and gain a deeper understanding of why secure coding practices matter.
 
@@ -30,7 +30,7 @@ We can perform a `basic port scan` of the `top 1,000` most commonly used ports. 
 
 ![image](https://github.com/user-attachments/assets/11ebd3d8-cb90-4e66-b4d7-9c7816e93fbb)
 
-As a result, we discovered that `ports 22 (SSH)` and `80 (HTTP)` are open. This indicates that the machine is running an `SSH service` and a `web server` — both of which are common entry points for further exploration.
+As a result, we discovered that `ports 22 (SSH)` and `80 (HTTP)` are open. This indicates that the machine is running an `SSH service` and a `web server`, both of which are common entry points for further exploration.
 
 To gather more information about these services, we’ll perform a `version detection scan` to identify the exact software and versions running on each port. This can help determine if there are any known vulnerabilities associated with the specific versions of the services.
 
