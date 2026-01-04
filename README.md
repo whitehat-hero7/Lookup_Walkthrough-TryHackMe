@@ -10,13 +10,13 @@
 
 As you explore `Lookup`, you'll dive deep into reconnaissance, scanning, and enumeration, uncovering hidden services and subdomains. You'll learn to exploit web vulnerabilities like command injection and gain a deeper understanding of why secure coding practices matter.
 
-Beyond just manual exploitation, `Lookup` encourages you to automate tasks, showing you the power of scripting in penetration testing. It's a lab that pushes you to think like an attacker — and grow like a pro.
+Beyond just manual exploitation, `Lookup` encourages you to automate tasks, showing you the power of scripting in penetration testing. It's a lab that pushes you to think like an attacker and grow like a pro.
 
 ## 🔶 Reconnaissance, Scanning, and Enumeration
 
 ### ✅ Step 1: Reconnaissance and Scanning
 
-To kick off the `reconnaissance` phase, the goal is to gather preliminary information about the target with minimal interaction. This step helps us identify whether the host is online and reachable — a crucial starting point before deeper scanning. We’ll begin by performing basic host discovery on the `Target IP Address` using an `Nmap` ping sweep scan to check if the target is up.
+To kick off the `reconnaissance` phase, the goal is to gather preliminary information about the target with minimal interaction. This step helps us identify whether the host is online and reachable, a crucial starting point before deeper scanning. We’ll begin by performing basic host discovery on the `Target IP Address` using an `Nmap` ping sweep scan to check if the target is up.
 
 **🔹 Ping Sweep Scan:** *`nmap -sn 10.10.x.x`*
 
